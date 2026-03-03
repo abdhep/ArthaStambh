@@ -11,8 +11,9 @@
   gtag('config', 'G-GFXVPNLB74');
 </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280, user-scalable=yes, initial-scale=0.5">
     <title>PPF Calculator - Public Provident Fund Calculator India | ArthaStambh</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <meta name="description" content="Free PPF calculator for India. Calculate PPF interest, balance, maturity amount, loan eligibility and withdrawal eligibility with historical interest rate data. Track deposits, withdrawals, and returns with XIRR calculation.">
     <meta name="keywords" content="PPF calculator India, public provident fund calculator, PPF interest calculator, PPF balance calculator, PPF maturity calculator, PPF loan eligibility calculator, PPF withdrawal calculator, PPF return calculator, PPF XIRR calculator, PPF account calculator online, post office PPF calculator, PPF interest rate India, PPF investment calculator, PPF tax calculator, PPF compounding calculator, best PPF calculator, accurate PPF calculator, PPF calculator with interest rates, PPF financial year calculator, PPF quarterly interest calculator, PPF monthly deposit calculator, PPF yearly deposit calculator, ArthaStambh PPF, calculate PPF returns, PPF scheme calculator, small savings scheme calculator, government savings scheme calculator, PPF partial withdrawal calculator, PPF premature closure calculator, PPF tenure calculator, 15 year PPF calculator, PPF extension calculator, PPF calculator 2024, PPF calculator 2025, PPF calculator 2026">
     <meta name="robots" content="index, follow">
@@ -225,76 +226,7 @@
         .legal-notice { margin-top:8px; padding:8px; background:#fff3cd; border:2px solid #ffc107; border-radius:4px; font-size:12px; line-height:1.6; }
         .legal-notice strong { color:#d32f2f; font-size:13px; }
 
-        /* ═══════════════════════════════════════ */
-        /* MOBILE RESPONSIVE - TABLES              */
-        /* ═══════════════════════════════════════ */
-
-        @media(max-width:768px){
-            /* Make tables horizontally scrollable on mobile */
-            .tbl-wrap{
-                overflow-x:auto;
-                -webkit-overflow-scrolling:touch;
-                margin:0 -16px;
-                padding:0 16px;
-            }
-
-            /* Add scroll hint */
-            .tbl-wrap::after{
-                content:"← Swipe to see more →";
-                display:block;
-                text-align:center;
-                font-size:11px;
-                color:#999;
-                padding:8px 0;
-                font-style:italic;
-            }
-
-            /* Adjust table font sizes */
-            table{font-size:12px}
-            th{font-size:11px;padding:6px 4px}
-            td{padding:6px 4px}
-            input{font-size:12px;padding:4px}
-
-            /* Buttons */
-            button,.btn{
-                font-size:14px;
-                padding:10px 16px;
-                width:100%;
-                margin:4px 0;
-            }
-
-            /* Panel adjustments */
-            .panel{margin-bottom:16px}
-            .panel-title{font-size:16px;padding:10px}
-
-            /* Three column layout becomes single column */
-            .three-col{
-                grid-template-columns:1fr !important;
-                gap:16px;
-            }
-
-            /* Summary section */
-            .summary-grid{
-                grid-template-columns:1fr;
-                gap:12px;
-            }
-
-            .summary-item{
-                padding:12px;
-            }
-
-            .summary-label{font-size:12px}
-            .summary-value{font-size:16px}
-        }
-
-        @media(max-width:480px){
-            table{font-size:11px}
-            th{font-size:10px;padding:4px 2px}
-            td{padding:4px 2px}
-            input{font-size:11px;padding:2px}
-            .panel-title{font-size:14px}
-        }
-    </style>
+        </style>
 
     <!-- JSON-LD Schema Markup for SEO -->
     <script type="application/ld+json">
@@ -340,9 +272,9 @@
     <h1>PPF Calculator – Public Provident Fund</h1>
 
     <div class="toolbar">
-        <button onclick="saveData()">&#128190; Save</button>
-        <button onclick="loadData()">&#128194; Load</button>
-        <button onclick="clearData()">&#128465; Clear</button>
+        <button onclick="loadData()">📂 Open</button>
+        <button onclick="saveData()">💾 Save</button>
+        <button onclick="clearData()">🗑️ Clear</button>
     </div>
     <input type="file" id="fileInput" style="display:none" accept=".json" onchange="handleFileLoad(event)">
 
@@ -1547,7 +1479,7 @@ function renderRateTable(needUntilDate) {
     }
 }
 
-// ─── Save / Load / Clear ──────────────────────────────────
+// ─── Save / Open / Clear ──────────────────────────────────
 async function saveData() {
     const data = {
         settlementDate: document.getElementById('settlementDate').value,
@@ -1558,14 +1490,14 @@ async function saveData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
     if (window.showSaveFilePicker) {
         try {
-            const h = await window.showSaveFilePicker({ suggestedName:'ppf-data.json', types:[{ description:'JSON', accept:{'application/json':['.json']} }] });
+            const h = await window.showSaveFilePicker({ suggestedName:'ppf-calculator-data.json', types:[{ description:'JSON', accept:{'application/json':['.json']} }] });
             const w = await h.createWritable();
             await w.write(blob); await w.close();
             alert('Saved successfully!'); return;
         } catch(e) { if (e.name === 'AbortError') return; }
     }
     const url = URL.createObjectURL(blob);
-    const a = Object.assign(document.createElement('a'), { href:url, download:'ppf-data.json' });
+    const a = Object.assign(document.createElement('a'), { href:url, download:'ppf-calculator-data.json' });
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
@@ -1588,7 +1520,7 @@ function handleFileLoad(e) {
                 addInputRow(r.date, depFormatted, wthFormatted);
             });
             renumber(); calc();
-        } catch(err) { alert('Error loading file: ' + err.message); }
+        } catch(err) { alert('Error opening file: ' + err.message); }
     };
     reader.readAsText(file);
     e.target.value = '';

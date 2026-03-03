@@ -11,8 +11,9 @@
   gtag('config', 'G-GFXVPNLB74');
 </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280, user-scalable=yes, initial-scale=0.5">
     <title>Personal Finance Calculator - Retirement Planning & Corpus Calculator India</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <meta name="description" content="Free online personal finance calculator for retirement planning, corpus calculation, financial goal planning, and investment portfolio analysis. Calculate retirement corpus, insurance needs, and financial goals for India.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Personal Finance Calculator – Retirement & Wealth Planning for India">
@@ -261,7 +262,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 3px 6px;
+            padding: 2px 6px;
             margin-bottom: 1px;
             background: #f8f8f8;
             border-left: 3px solid #2c5f2d;
@@ -323,13 +324,6 @@
             padding: 8px;
         }
         
-        .footer-section {
-            grid-column: 1 / 4;
-            background: white;
-            border: 1px solid #d0d0d0;
-            padding: 8px;
-        }
-        
         .chart-container { height: 520px; position: relative; }
         
         .ref-table {
@@ -341,37 +335,6 @@
         
         .ref-table table { margin-top: 2px; }
         .ref-table td { padding: 1px 4px; border: none; line-height: 1.3; }
-        
-        .copyright {
-            margin-top: 6px;
-            padding: 8px;
-            background: #f0f0f0;
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-            border: 2px solid #2c5f2d;
-            border-radius: 4px;
-        }
-        
-        .legal-notice {
-            margin-top: 8px;
-            padding: 8px;
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-        
-        .legal-notice strong {
-            color: #d32f2f;
-            font-size: 13px;
-        }
-        
-        .legal-notice br {
-            content: "";
-            display: block;
-            margin: 3px 0;
-        }
         
         .error {
             border-color: #d32f2f !important;
@@ -394,77 +357,8 @@
         .col-goal-infl { width: 10%; }
         .col-goal-future { width: 15%; }
 
-        
-        /* ═══════════════════════════════════════ */
-        /* MOBILE RESPONSIVE - TABLES              */
-        /* ═══════════════════════════════════════ */
-        
-        @media(max-width:768px){
-            /* Make tables horizontally scrollable on mobile */
-            .tbl-wrap{
-                overflow-x:auto;
-                -webkit-overflow-scrolling:touch;
-                margin:0 -16px;
-                padding:0 16px;
-            }
-            
-            /* Add scroll hint */
-            .tbl-wrap::after{
-                content:"← Swipe to see more →";
-                display:block;
-                text-align:center;
-                font-size:11px;
-                color:#999;
-                padding:8px 0;
-                font-style:italic;
-            }
-            
-            /* Adjust table font sizes */
-            table{font-size:12px}
-            th{font-size:11px;padding:6px 4px}
-            td{padding:6px 4px}
-            input{font-size:12px;padding:4px}
-            
-            /* Buttons */
-            button,.btn{
-                font-size:14px;
-                padding:10px 16px;
-                width:100%;
-                margin:4px 0;
-            }
-            
-            /* Panel adjustments */
-            .panel{margin-bottom:16px}
-            .panel-title{font-size:16px;padding:10px}
-            
-            /* Three column layout becomes single column */
-            .three-col{
-                grid-template-columns:1fr !important;
-                gap:16px;
-            }
-            
-            /* Summary section */
-            .summary-grid{
-                grid-template-columns:1fr;
-                gap:12px;
-            }
-            
-            .summary-item{
-                padding:12px;
-            }
-            
-            .summary-label{font-size:12px}
-            .summary-value{font-size:16px}
-        }
-        
-        @media(max-width:480px){
-            table{font-size:11px}
-            th{font-size:10px;padding:4px 2px}
-            td{padding:4px 2px}
-            input{font-size:11px;padding:2px}
-            .panel-title{font-size:14px}
-        }
-    </style>
+        </style>
+
 </head>
 <body>
 <div id="header-placeholder"></div>
@@ -473,8 +367,8 @@
         <h1>Personal Finance Calculator - Retirement Planning & Corpus Calculator</h1>
         
         <div class="toolbar">
+            <button onclick="loadData()">📂 Open</button>
             <button onclick="saveData()">💾 Save</button>
-            <button onclick="loadData()">📂 Load</button>
             <button onclick="clearData()">🗑️ Clear</button>
         </div>
         <input type="file" id="fileInput" style="display:none" accept=".json" onchange="handleFileLoad(event)">
@@ -732,7 +626,7 @@
             
             <!-- Chart Section (Full Width) -->
             <div class="chart-section">
-                <div class="section-title">Corpus and Monthly Expenses Over the Years</div>
+                <div class="section-title">Corpus and Monthly Amounts Over the Years</div>
                 <div class="chart-container">
                     <canvas id="mainChart"></canvas>
                 </div>
@@ -1297,6 +1191,8 @@ function updateChart(data, retirementYear, deathYear) {
     const corpusCreated = chartData.map(d => d.corpusPost / 1e7);
     const corpusRequired = chartData.map(d => d.corpusReq / 1e7);
     const monthlyExpenses = chartData.map(d => (d.exp + d.fixExp) / 1e5);
+    const monthlyInvestments = chartData.map(d => ((d.inc - (d.exp + d.fixExp)) > 0 ? (d.inc - (d.exp + d.fixExp)) : null) / 1e5);
+    const monthlyWithdrawals = chartData.map(d => (((d.exp + d.fixExp) - d.inc) > 0 ? ((d.exp + d.fixExp) - d.inc) : null) / 1e5);
     
     if (chart) {
         chart.destroy();
@@ -1345,6 +1241,32 @@ function updateChart(data, retirementYear, deathYear) {
                     pointHoverRadius: 4,
                     yAxisID: 'y1',
                     borderDash: [3, 3]
+                },
+                {
+                    label: 'Monthly Investments (₹ Lakh)',
+                    data: monthlyInvestments,
+                    borderColor: '#2e7d32',
+                    backgroundColor: 'rgba(46, 125, 50, 0)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    yAxisID: 'y1',
+                    borderDash: [3, 3]
+                },
+                {
+                    label: 'Monthly Withdrawals (₹ Lakh)',
+                    data: monthlyWithdrawals,
+                    borderColor: '#1565c0',
+                    backgroundColor: 'rgba(211, 47, 47, 0)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    yAxisID: 'y1',
+                    borderDash: [3, 3]
                 }
             ]
         },
@@ -1379,7 +1301,7 @@ function updateChart(data, retirementYear, deathYear) {
                     position: 'right',
                     title: {
                         display: true,
-                        text: 'Monthly Expenses (₹ Lakh)',
+                        text: 'Monthly Amounts (₹ Lakh)',
                         font: { size: 14, family: 'Calibri' },
                         color: '#1565c0'
                     },
@@ -1461,7 +1383,7 @@ function delRow(button) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// SAVE / LOAD FUNCTIONS
+// SAVE / OPEN FUNCTIONS
 // ═══════════════════════════════════════════════════════════
 
 async function saveData() {
@@ -1596,7 +1518,7 @@ function handleFileLoad(event) {
             
             calc();
         } catch (err) {
-            alert('Error loading file: ' + err.message);
+            alert('Error opening file: ' + err.message);
         }
     };
     reader.readAsText(file);

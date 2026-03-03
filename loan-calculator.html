@@ -11,8 +11,9 @@
   gtag('config', 'G-GFXVPNLB74');
 </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280, user-scalable=yes, initial-scale=0.5">
     <title>Loan Calculator – EMI, Amortization, Prepayment, Pre-EMI, Construction Loan India | ArthaStambh</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <meta name="description" content="Free advanced loan calculator for India. Calculate EMI, generate full amortization schedule, model construction disbursements, prepayments, pre-EMI interest, variable interest rates, quarterly/annual rest options. Covers home loan, car loan, personal loan, mortgage and more.">
     <meta name="keywords" content="loan calculator India, EMI calculator, home loan EMI calculator, car loan calculator, personal loan calculator, loan amortization schedule, prepayment calculator, part payment calculator, pre-EMI interest calculator, construction loan calculator, under construction property loan, disbursement based EMI, variable rate loan calculator, floating interest rate calculator, loan tenure calculator, monthly rest loan, quarterly rest loan, annual rest loan, loan outstanding calculator, loan interest calculator, principal interest breakup, financial year loan summary, loan prepayment benefit, home loan India, mortgage calculator India, housing loan calculator, EMI schedule India, loan repayment schedule, reduce loan tenure, reduce EMI after prepayment, ArthaStambh loan calculator">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -239,77 +240,9 @@
         }
 
         
-        /* ═══════════════════════════════════════ */
-        /* MOBILE RESPONSIVE - TABLES              */
-        /* ═══════════════════════════════════════ */
-        
-        @media(max-width:768px){
-            /* Make tables horizontally scrollable on mobile */
-            .tbl-wrap{
-                overflow-x:auto;
-                -webkit-overflow-scrolling:touch;
-                margin:0 -16px;
-                padding:0 16px;
-            }
-            
-            /* Add scroll hint */
-            .tbl-wrap::after{
-                content:"← Swipe to see more →";
-                display:block;
-                text-align:center;
-                font-size:11px;
-                color:#999;
-                padding:8px 0;
-                font-style:italic;
-            }
-            
-            /* Adjust table font sizes */
-            table{font-size:12px}
-            th{font-size:11px;padding:6px 4px}
-            td{padding:6px 4px}
-            input{font-size:12px;padding:4px}
-            
-            /* Buttons */
-            button,.btn{
-                font-size:14px;
-                padding:10px 16px;
-                width:100%;
-                margin:4px 0;
-            }
-            
-            /* Panel adjustments */
-            .panel{margin-bottom:16px}
-            .panel-title{font-size:16px;padding:10px}
-            
-            /* Three column layout becomes single column */
-            .three-col{
-                grid-template-columns:1fr !important;
-                gap:16px;
-            }
-            
-            /* Summary section */
-            .summary-grid{
-                grid-template-columns:1fr;
-                gap:12px;
-            }
-            
-            .summary-item{
-                padding:12px;
-            }
-            
-            .summary-label{font-size:12px}
-            .summary-value{font-size:16px}
-        }
-        
-        @media(max-width:480px){
-            table{font-size:11px}
-            th{font-size:10px;padding:4px 2px}
-            td{padding:4px 2px}
-            input{font-size:11px;padding:2px}
-            .panel-title{font-size:14px}
-        }
-    </style>
+        </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 </head>
 <body>
 <div id="header-placeholder"></div>
@@ -318,8 +251,8 @@
     <h1>Loan Calculator</h1>
     
     <div class="toolbar">
+        <button onclick="loadData()">📂 Open</button>
         <button onclick="saveData()">💾 Save</button>
-        <button onclick="loadData()">📂 Load</button>
         <button onclick="clearAll()">🗑️ Clear</button>
     </div>
     
@@ -1627,7 +1560,7 @@ function updateChart() {
     });
 }
 
-// Save/Load/Clear functions
+// Save/Open/Clear functions
 function saveData() {
     const data = {
         loanAmount: document.getElementById('loanAmount').value,
@@ -1728,7 +1661,7 @@ function loadData() {
                 
                 calculate();
             } catch (err) {
-                alert('Error loading file: ' + err.message);
+                alert('Error opening file: ' + err.message);
             }
         };
         reader.readAsText(file);
