@@ -199,6 +199,8 @@
             opacity: 1;
         }
         
+        .tbl-wrap { max-height:512px; overflow-x:auto; overflow-y:auto; }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -329,7 +331,7 @@
             padding: 8px;
         }
         
-        .chart-container { height: 560px; position: relative; }
+        .chart-container { height: 540px; position: relative; }
         
         .ref-table {
             font-size: 14px;
@@ -585,6 +587,7 @@
             <!-- Goals (Spanning 2 Columns) -->
             <div class="section goals">
                 <div class="section-title">Financial Goals</div>
+                <div class="tbl-wrap">
                 <table id="goalTable">
                     <thead>
                         <tr>
@@ -635,6 +638,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
                 <button class="btn-add" onclick="addRow('goal')">+ Add</button>
             </div>
             
