@@ -43,8 +43,65 @@
     </div>
 </footer>`;
 
-    var AD_LEFT  = `<div class="ad-col-left"><div class="ad-slot"></div></div>`;
-    var AD_RIGHT = `<div class="ad-col-right"><div class="ad-slot"></div></div>`;
+    var GTAG = `
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFXVPNLB74"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GFXVPNLB74');
+</script>`;
+
+    var AD_HEAD = `
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303770276201584" crossorigin="anonymous"></script>`;
+
+    var AD_LEFT  = `
+<div class="ad-col-left">
+    <div class="ad-slot">
+        <script>
+          atOptions = {
+            'key' : 'a0786f8d29a961f408b8ce76d47e389d',
+            'format' : 'iframe',
+            'height' : 300,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/a0786f8d29a961f408b8ce76d47e389d/invoke.js"></script>
+    </div>
+    <div class="ad-slot">
+        <script>
+          atOptions = {
+            'key' : 'a0786f8d29a961f408b8ce76d47e389d',
+            'format' : 'iframe',
+            'height' : 300,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/a0786f8d29a961f408b8ce76d47e389d/invoke.js"></script>
+    </div>
+</div>`;
+
+    var AD_RIGHT = `
+<div class="ad-col-right">
+    <div class="ad-slot">
+        <script>
+          atOptions = {
+            'key' : 'add9795dda13cd521a60e91fce82d442',
+            'format' : 'iframe',
+            'height' : 600,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/add9795dda13cd521a60e91fce82d442/invoke.js"></script>
+    </div>
+</div>`;
+
+    document.head.insertAdjacentHTML('afterbegin', GTAG);
 
     // Inject header
     var hp = document.getElementById('header-placeholder');
@@ -59,6 +116,7 @@
     if (pbw) {
         pbw.insertAdjacentHTML('afterbegin', AD_LEFT);
         pbw.insertAdjacentHTML('beforeend', AD_RIGHT);
+        document.head.insertAdjacentHTML('beforeend', AD_HEAD);
     }
 
     // Set active nav link based on current page filename
