@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Personal Finance Calculator – Retirement & Wealth Planning for India">
     <meta name="twitter:description" content="Comprehensive retirement planning calculator with asset allocation, expense tracking, and goal planning for Indian investors.">
-    <meta name="keywords" content="personal finance calculator India, retirement planning calculator, retirement corpus calculator, financial planning tool India, investment portfolio calculator, asset allocation calculator, expense tracking calculator, income planning tool, debt management calculator, emergency fund calculator, retirement age calculator, life expectancy calculator India, FIRE calculator India, financial independence calculator, pension planning India, retirement savings calculator, corpus required calculator, wealth calculator India, financial goal planner, tax planning calculator, SWR calculator, withdrawal rate calculator, safe withdrawal rate India, post-retirement planning, retirement income planner, net worth calculator India, debt to asset ratio, insurance needs calculator India, term insurance calculator, health insurance calculator, mutual fund calculator, equity allocation calculator, debt allocation calculator, inflation adjusted returns, real rate of return calculator, financial freedom calculator, early retirement calculator India, retirement readiness calculator, retirement gap analysis, monthly income after retirement, pension corpus calculator, gratuity calculator, PF calculator, EPF calculator, NPS calculator, retirement planning online India, free financial calculator, ArthaStambh calculator">
+    <meta name="keywords" content="personal finance calculator India, retirement planning calculator, retirement corpus calculator, financial planning tool India, FIRE calculator India, financial independence calculator, retirement savings calculator, corpus required calculator, wealth calculator India, financial goal planner, post-retirement planning, retirement income planner, net worth calculator India, debt to asset ratio, insurance needs calculator India, term insurance calculator, financial freedom calculator, early retirement calculator India, retirement readiness calculator, retirement gap analysis, monthly income after retirement, retirement planning online India, free financial calculator, ArthaStambh calculator">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://arthastambh.com/personal-finance-calculator">
     
@@ -451,8 +451,9 @@
                 </div>
                 <div class="row">
                     <label>Share of Elder Partner in Family Income (%)</label>
-                    <input type="number" step="0.01" id="elderShare" onblur="fmtPct(this)" oninput="calc()">
+                    <input type="number" step="0.01" id="elderShare" onblur="fmtPct(this)" oninput="validateIncShare(); calc()">
                 </div>
+                <div class="error-msg" id="eIncSharePctErr"></div>
                 <div class="row">
                     <label>Average Annual Returns pre-retirement (%)</label>
                     <input type="number" step="0.01" id="preRet" onblur="fmtPct(this)" oninput="calc()">
@@ -657,11 +658,11 @@
                 <div class="section-title">Reference Data</div>
                 <div class="ref-table">
                     <table>
-                        <tr><td>Average life expectancy in India:</td><td>72.7 years</td></tr>
-                        <tr><td>Average male life expectancy in India:</td><td>71.2 years</td></tr>
-                        <tr><td>Average female life expectancy in India:</td><td>74.4 years</td></tr>
-                        <tr><td>Annual Cost Inflation Index since 1981-82:</td><td>6.51%</td></tr>
-                        <tr><td>Annual Cost Inflation Index since 2001-02:</td><td>5.67%</td></tr>
+                        <tr><td>Average life expectancy in India</td><td>72.7 years</td></tr>
+                        <tr><td>Average male life expectancy in India</td><td>71.2 years</td></tr>
+                        <tr><td>Average female life expectancy in India</td><td>74.4 years</td></tr>
+                        <tr><td>Annual Cost Inflation Index since 1981-82</td><td>6.51%</td></tr>
+                        <tr><td>Annual Cost Inflation Index since 2001-02</td><td>5.67%</td></tr>
                     </table>
                 </div>
             </div>
@@ -943,6 +944,30 @@ function validateAges() {
     return valid;
 }
 
+/**
+ * Validate elder income share percentage
+ * Returns true if validations pass
+ */
+function validateIncShare() {
+    const elderShare = parseNum(document.getElementById('elderShare').value);
+
+    let valid = true;
+    
+    // Clear errors
+    hideError('eIncSharePctErr');
+    
+    // Income share must be between 0 and 100 percent
+    if (elderShare && (elderShare < 0 || elderShare > 100)) {
+        document.getElementById('elderShare').classList.add('error');
+        showError('eIncSharePctErr', 'Income share must be between 0 and 100 percent');
+        valid = false;
+    } else {
+        document.getElementById('elderShare').classList.remove('error');
+    }
+    
+    return valid;
+}
+
 // ═══════════════════════════════════════════════════════════
 // CHART VARIABLE
 // ═══════════════════════════════════════════════════════════
@@ -957,8 +982,8 @@ let chart;
  * Main calculation function - computes all financial projections
  */
 function calc() {
-    // Validate ages first
-    if (!validateAges()) {
+    // Validate ages and Income share first
+    if (!validateAges() || !validateIncShare()) {
         return;
     }
     
